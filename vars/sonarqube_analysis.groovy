@@ -1,12 +1,12 @@
-def call(String SonarQubeAPI, String Projectname, String ProjectKey) {
+def call(String sonarServer, String projectName, String projectKey) {
 
-    def scannerHome = tool 'Sonar'   // 👈 THIS IS THE KEY FIX
+    def scannerHome = tool(name: 'Sonar', type: 'hudson.plugins.sonar.SonarRunnerInstallation')
 
-    withSonarQubeEnv(SonarQubeAPI) {
+    withSonarQubeEnv(sonarServer) {
         sh """
             ${scannerHome}/bin/sonar-scanner \
-            -Dsonar.projectName=${Projectname} \
-            -Dsonar.projectKey=${ProjectKey} \
+            -Dsonar.projectName=${projectName} \
+            -Dsonar.projectKey=${projectKey} \
             -X
         """
     }
